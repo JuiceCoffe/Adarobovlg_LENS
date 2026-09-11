@@ -1,0 +1,45 @@
+[build-system]
+requires = ["setuptools>=45", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "d3fields"
+version = "0.1.0"
+description = "D3Fields: Dynamic 3D Descriptor Fields for Zero-Shot Generalizable Rearrangement"
+readme = "d3fields/README.md"
+requires-python = ">=3.8"
+license = {text = "MIT"}
+authors = [
+    {name = "Yixuan Wang"},
+    {name = "Zhuoran Li"},
+]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "License :: OSI Approved :: MIT License",
+]
+dependencies = [
+    "torch>=1.9.0",
+    "torchvision>=0.10.0",
+    "numpy",
+    "opencv-python",
+    "scikit-image",
+    "trimesh",
+    "pytorch3d",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest",
+    "black",
+    "flake8",
+]
+
+[project.urls]
+Homepage = "https://github.com/WangYixuan12/d3fields"
+Repository = "https://github.com/WangYixuan12/d3fields.git"
+
+[tool.setuptools]
+packages = ["d3fields"]

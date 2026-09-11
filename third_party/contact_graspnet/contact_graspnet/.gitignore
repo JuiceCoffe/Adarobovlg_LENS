@@ -1,0 +1,11 @@
+/grasp-api
+/experiments
+dc6d_dataset
+graspnet_1billion
+acronym/
+*.sh
+/grasp-api
+/data/urdfs
+*.png
+*.zip
+visualization/

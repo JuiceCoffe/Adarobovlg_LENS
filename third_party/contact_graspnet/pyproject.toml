@@ -1,0 +1,56 @@
+[build-system]
+requires = ["setuptools>=45", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "contact-graspnet"
+version = "0.1.0"
+description = "GraspClutter6D Contact-GraspNet baseline"
+readme = "contact-graspnet/README.md"
+requires-python = ">=3.8"
+authors = [
+    {name = "GraspClutter6D Contact-GraspNet Contributors"},
+]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+]
+dependencies = [
+    "cython",
+    "scipy",
+    "transforms3d==0.3.1",
+    "open3d>=0.8.0.0",
+    "trimesh",
+    "tqdm",
+    "opencv-python",
+    "matplotlib",
+    "pywavefront",
+    "scikit-image",
+    "autolab_core",
+    "autolab-perception",
+    "cvxopt",
+    "dill",
+    "h5py",
+    "scikit-learn",
+    "grasp_nms",
+    "numpy==1.23.4",
+    "setuptools==59.8.0",
+    "ninja",
+    "tensorboard==2.3",
+    "easydict",
+    "provider",
+    "pyrender",
+    "pillow==9.5.0",
+    "pyyaml",
+    "pyglet<2",
+    "timm",
+]
+
+[project.urls]
+Homepage = "https://github.com/SeungBack/gc6d-contact-graspnet"
+Repository = "https://github.com/SeungBack/gc6d-contact-graspnet.git"
+
+[tool.setuptools]
+packages = ["contact_graspnet"]

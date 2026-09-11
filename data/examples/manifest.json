@@ -1,0 +1,32 @@
+[
+  {
+    "file": "static/red_chips_can.pkl",
+    "prompt": "red chips can",
+    "obs_pose": "world-to-camera",
+    "sha256": "155740073959c5f5c402c923c0522f8502613e5c2d235282c37b08f35dccce45"
+  },
+  {
+    "file": "static/green_bottle_cap.pkl",
+    "prompt": "the cap of the green bottle",
+    "obs_pose": "world-to-camera",
+    "sha256": "e2990c2f4d14d5261097598b5f2fe4e7ea572bdcff533479771f8ceab2514f03"
+  },
+  {
+    "file": "static/black_headphone_headband.pkl",
+    "prompt": "the headband of the black headphones",
+    "obs_pose": "world-to-camera",
+    "sha256": "a06fb6a663b1b4ac3704f332cab564b9c22dc7b0f21fa9c81d2c410d44584cd0"
+  },
+  {
+    "file": "dynamic/white_box_000.pkl",
+    "prompt": "white box",
+    "obs_pose": "world-to-camera",
+    "sha256": "4aeecab78b63138099d9954c37f0d8ac4b55e2455a8bed101478b212b7ffddcc"
+  },
+  {
+    "file": "dynamic/white_box_001.pkl",
+    "prompt": "white box",
+    "obs_pose": "world-to-camera",
+    "sha256": "55845cb229cf3d7e393e4c5245e19d6fc271cc8620a047812751361907f1477e"
+  }
+]
