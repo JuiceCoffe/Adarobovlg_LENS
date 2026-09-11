@@ -139,8 +139,6 @@ pip install --no-deps \
 reapplying the vendored packages' older dependency pins. XMem is part of D3Fields and does
 not require a separate installation.
 
----
-
 <a id="model-weights"></a>
 ## 💾 Model Weights
 
