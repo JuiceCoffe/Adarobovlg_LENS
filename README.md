@@ -176,6 +176,8 @@ export ADAROBOVLG_VLM_MODEL='qwen3.5-plus'
 export ADAROBOVLG_VLM_BASE_URL='https://dashscope.aliyuncs.com/compatible-mode/v1'
 ```
 
+The current VLM request sets [`enable_thinking` to `False`](model/mask_generator.py#L380) by default. This reduces latency and makes target localization faster, but detection accuracy may be lower for difficult scenes. If accuracy is more important, change this setting to `True` to enable extended reasoning.
+
 Another VLM can use these environment variables directly only if it provides an OpenAI-compatible Chat Completions endpoint, accepts Base64 `image_url` input together with the current `response_format` and `enable_thinking` parameters, and returns exactly one `[xmin, ymin, xmax, ymax]` bounding box per image as a strict JSON array with coordinates in the `0–1000` range. Otherwise, adapt the request and response handling in `ObjectDetector` in [model/mask_generator.py](model/mask_generator.py). The current implementation reads the provider key from `DASHSCOPE_API_KEY`. The `--text-prompt` option selects the local English-prompt path and does not call a VLM.
 
 ### Language-Guided Target Grasping Services
