@@ -73,6 +73,7 @@ class SingleTaskGraspServerZMQ:
         load_model=True,
         gen_box=True,
         mask_conf=None,
+        mask_backend=None,
         selection_timeout=0,
         verbose=False,
     ):
@@ -80,6 +81,7 @@ class SingleTaskGraspServerZMQ:
         self.port = self.default_port if port is None else port
         self.address = f"{protocol}://{host}:{self.port}"
         self.gen_box = gen_box
+        self.mask_backend = mask_backend
         self.mask_conf = self.default_mask_conf if mask_conf is None else mask_conf
         if not np.isfinite(selection_timeout) or selection_timeout < 0:
             raise ValueError("selection_timeout must be finite and nonnegative")
@@ -211,6 +213,7 @@ class SingleTaskGraspServerZMQ:
                 track=False,
                 num_cam=self.model_num_cam,
                 gen_box=self.gen_box,
+                mask_backend=self.mask_backend,
             )
         return self.adarobovlg
 
@@ -542,6 +545,10 @@ def create_server_parser(server_cls, description):
     )
     parser.add_argument("--text-prompt", action="store_true", help="Use local SAM3 English prompts")
     parser.add_argument(
+        "--mask-backend", choices=("sam3", "lens"), default=None,
+        help="Mask backend; lens uses direct LENS language-to-mask inference",
+    )
+    parser.add_argument(
         "--selection-timeout",
         type=float,
         default=0,
@@ -577,6 +584,7 @@ def run_server(server_cls, parser):
         save_request_data=args.save_request_data,
         start_visualizer=not args.no_visualizer,
         gen_box=not args.text_prompt,
+        mask_backend=args.mask_backend,
         selection_timeout=args.selection_timeout,
         verbose=args.verbose,
         **device_options,

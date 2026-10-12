@@ -348,6 +348,7 @@ Use the bundled implementations because this project depends on local adaptation
 | [Model Weights](docs/model_weights.md) | Weight purposes, loading locations, and checksum verification |
 | [Repository Structure](docs/repository_structure.md) | Expanded source layout and important entry points |
 | [Third-Party Components](docs/third_party.md) | Bundled dependency provenance, setup, and licenses |
+| [LENS Mask Backend](docs/lens.md) | Configure LENS natural-language masks and run mask or full-grasp demos |
 
 Regression checks under `test/` validate interfaces and processing logic; see the [testing guide](docs/testing.md) for commands and requirements. They are not evaluations of the paper's grasping performance.
 

@@ -105,9 +105,21 @@ def select_instance_mask(result, image_shape):
 
 
 class MaskGenerator:
-    def __init__(self, confidence_thres=0.7, ckpt_path="checkpoints/sam3", gen_box=True):
+    def __init__(self, confidence_thres=0.7, ckpt_path="checkpoints/sam3", gen_box=True, backend=None):
         """Load local SAM3 processors/models and select remote-box or local-text segmentation."""
         from utils.checkpoints import ROOT, checkpoint_path
+
+        backend = backend or os.environ.get("ADAROBOVLG_MASK_BACKEND", "sam3").lower()
+        if backend == "lens":
+            from .lens_mask_generator import LensMaskGenerator
+
+            self.backend = "lens"
+            self.generate_mask = LensMaskGenerator().generate_mask
+            self.generate_mask_with_2d_points = None
+            return
+        if backend != "sam3":
+            raise ValueError(f"Unknown mask backend: {backend}. Expected 'sam3' or 'lens'.")
+        self.backend = "sam3"
 
         relative = (
             "sam3" if ckpt_path == "checkpoints/sam3" else ROOT / Path(ckpt_path).expanduser()

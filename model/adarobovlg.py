@@ -20,7 +20,7 @@ from .mask_generator import MaskGenerator
 
 
 class AdaRoboVLG:
-    def __init__(self, mask_conf=0.1, track=False, num_cam=4, gen_box=False):
+    def __init__(self, mask_conf=0.1, track=False, num_cam=4, gen_box=False, mask_backend=None):
         """Initialize the segmentation, projection, grasp-generation, and tracking modules.
 
         Args:
@@ -29,7 +29,9 @@ class AdaRoboVLG:
             num_cam: number of camera views
             gen_box: whether to generate bounding box before mask generation (SAM with box prompt vs text prompt)
         """
-        self.maskgen = MaskGenerator(confidence_thres=mask_conf, gen_box=gen_box)
+        self.maskgen = MaskGenerator(
+            confidence_thres=mask_conf, gen_box=gen_box, backend=mask_backend
+        )
         self.featproj = FeatProjector(num_cam=num_cam, track=track)
         self.track_featproj = None
         self.graspgen = GraspGenerator()
@@ -141,7 +143,9 @@ class AdaRoboVLG:
         # Remove statistical outliers from the projected mask.
         mask_idxs = np.where(mask_3d[:, 0] > 0.19)[0]
         pcd = o3d.geometry.PointCloud()
-        pcd.points = o3d.utility.Vector3dVector(pts[mask_idxs, :])
+        pcd.points = o3d.utility.Vector3dVector(
+            np.asarray(pts[mask_idxs, :], dtype=np.float64, order="C")
+        )
         cl, ind = pcd.remove_statistical_outlier(nb_neighbors=40, std_ratio=0.3)
         self.mask_3d = np.zeros_like(mask_3d)
         self.mask_3d[mask_idxs[ind], 0] = 1.0
@@ -401,7 +405,7 @@ class AdaRoboVLG:
             self.generate_mask(images, prompt, debug=debug)
             self.mask_project(pts, obs, color=color, debug=debug)
 
-        if np.sum(self.mask_3d) == 0:
+        if np.sum(self.mask_3d) == 0 and getattr(self.maskgen, "backend", "sam3") != "lens":
             best_points = self.graspgen.get_best_points(pts, top_k=1, flip_z=flip_z, debug=debug)
             self.generate_mask_with_3d_point(images, best_points, obs, debug=debug)
             self.mask_project(pts, obs, color=color, debug=debug)

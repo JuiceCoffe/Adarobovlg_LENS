@@ -58,8 +58,18 @@ class PandaGripper(object):
         self.contact_ray_directions = []
 
         # coords_path = os.path.join(root_folder, 'gripper_control_points/panda_gripper_coords.npy')
-        with open(os.path.join(root_folder,'gripper_control_points/panda_gripper_coords.pickle'), 'rb') as f:
-            self.finger_coords = pickle.load(f, encoding='latin1')
+        try:
+            with open(os.path.join(root_folder, 'gripper_control_points/panda_gripper_coords.pickle'), 'rb') as f:
+                self.finger_coords = pickle.load(f, encoding='latin1')
+        except Exception:
+            import yaml
+
+            with open(os.path.join(root_folder, 'gripper_control_points/panda_gripper_coords.yml')) as f:
+                self.finger_coords = yaml.safe_load(f)
+            self.finger_coords = {
+                key: np.asarray(value, dtype=np.float32)
+                for key, value in self.finger_coords.items()
+            }
         finger_direction = self.finger_coords['gripper_right_center_flat'] - self.finger_coords['gripper_left_center_flat']
         self.contact_ray_origins.append(np.r_[self.finger_coords['gripper_left_center_flat'], 1])
         self.contact_ray_origins.append(np.r_[self.finger_coords['gripper_right_center_flat'], 1])
